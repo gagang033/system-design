@@ -6,7 +6,7 @@ export class DebugLogger extends Logger {
     }
     log(logLevel: LogLevel, msg: string): void {
         if(logLevel == LogLevel.DEBUG){
-            console.log("INFO: ",msg);
+            console.log("DEBUG: ",msg);
             return;
         }
         super.log(logLevel,msg);

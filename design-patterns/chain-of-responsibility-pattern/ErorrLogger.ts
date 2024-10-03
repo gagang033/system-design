@@ -6,7 +6,7 @@ export class ErrorLogger extends Logger {
     }
     log(logLevel: LogLevel, msg: string): void {
         if(logLevel == LogLevel.ERROR){
-            console.log("INFO: ",msg);
+            console.log("ERROR: ",msg);
             return;
         }
         super.log(logLevel,msg);

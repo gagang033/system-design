@@ -3,12 +3,32 @@ import { PriorityQueue } from './PriorityQueue';
 import { ScheduledTask, TaskType, TimeUnit } from './ScheduledTask';
 export class ScheduledExecutorService {
     private _queue: PriorityQueue<ScheduledTask>;
+    private static _instance: ScheduledExecutorService | null = null;
+    private static _lock: boolean = false;
     taskComparator = (a: ScheduledTask, b: ScheduledTask): number => {
         return a.executionTime - b.executionTime;
-      };
-    constructor() {
+    };
+    private constructor() {
         this._queue = new PriorityQueue<ScheduledTask>(this.taskComparator);
         this._execute();
+    }
+
+    static getInstance = (): ScheduledExecutorService => {
+        if (this._instance === null) {
+            if (!this._lock) {
+                this._lock = true;
+                try {
+                    if (this._instance === null) {
+                        this._instance = new ScheduledExecutorService();
+                    }
+                }
+                finally {
+                    this._lock = false;
+                }
+            }
+
+        }
+        return this._instance;
     }
 
     private _execute = () => {

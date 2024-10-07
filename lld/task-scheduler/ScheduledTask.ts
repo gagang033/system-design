@@ -42,7 +42,7 @@ export class ScheduledTask {
     }
 
     get getNextExecutionTime(): number {
-        return (this._executionTime*-1 + this._delay * delayMap[this._unit])*-1;
+        return (this._executionTime + this._delay * delayMap[this._unit]);
     }
 
     set executionTime(time: number) {

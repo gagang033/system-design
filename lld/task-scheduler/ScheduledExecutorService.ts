@@ -4,7 +4,7 @@ import { ScheduledTask, TaskType, TimeUnit } from './ScheduledTask';
 export class ScheduledExecutorService {
     private _queue: PriorityQueue<ScheduledTask>;
     taskComparator = (a: ScheduledTask, b: ScheduledTask): number => {
-        return b.executionTime - a.executionTime;
+        return a.executionTime - b.executionTime;
       };
     constructor() {
         this._queue = new PriorityQueue<ScheduledTask>(this.taskComparator);
@@ -18,7 +18,7 @@ export class ScheduledExecutorService {
             }, 500);
         }
         else {
-            while (this._queue.size() > 0 && this._queue.peek().executionTime*-1 <= Date.now()) {
+            while (this._queue.size() > 0 && this._queue.peek().executionTime <= Date.now()) {
                 const scheduledTask: ScheduledTask = this._queue.poll();
                 scheduledTask.task();
                 //console.log(scheduledTask);

@@ -69,6 +69,7 @@ class LRUEvictionPolicy: public EvictionPolicy{
             if(nodeMap.find(key)==nodeMap.end()){
                 Node* node=dll->addNode(key);
                 nodeMap[key]=node;
+                return;
             }
             Node* node=nodeMap[key];
             dll->moveNodeToHead(node);
@@ -96,6 +97,7 @@ class HashMapStorage {
             if(storage.find(key)!=storage.end()){
                 storage[key]=val;
                 evictionPolicy->update(key);
+                return;
             }
             if(storage.size()==this->capacity){
                 int key=evictionPolicy->evict();
